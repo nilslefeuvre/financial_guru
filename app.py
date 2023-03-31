@@ -25,7 +25,7 @@ nb_jours = int(st.text_input("Entrer l'horizon de temps souhaité pour la prévi
 
 option = st.selectbox(
     'Sélectionner un modèle de prévision :',
-    ('SARIMAX', 'Prophet'))
+    ('Prophet', 'Neural Prophet'))
 
 # Pour mettre une date à choisir
 # d = st.date_input("Date de début")
