@@ -24,9 +24,9 @@ user_input = st.text_input("Entrer le symbole de l'actif désiré :",'MSFT')
 
 nb_jours = int(st.text_input("Entrer l'horizon de temps souhaité pour la prévision (en nombre de jours) :",365))
 
-option = st.selectbox(
-    'Sélectionner un modèle de prévision :',
-    ('Prophet', 'Neural Prophet'))
+# option = st.selectbox(
+#     'Sélectionner un modèle de prévision :',
+#     ('Prophet', 'Neural Prophet'))
 
 # Pour mettre une date à choisir
 # d = st.date_input("Date de début")
@@ -62,27 +62,27 @@ if option == 'Prophet':
   fig.add_scatter(x=forecast['ds'], y=forecast['yhat'], mode='lines', name='Prix prévisionnel', line=dict(color="#F5241E"))
   # fig.update_layout(title_text=f'Predicted {ticker} Stock Prices For Next Year', title_x=0.5)
   title = f"Voici le cours prévisionnel de l"+"'"+f"actif {ticker} pour les {nb_jours} prochains jours"
-  
-  st.markdown(f"<h3 style='text-align: center; color: grey;'>{title}</h3>",unsafe_allow_html=True)
-  st.plotly_chart(fig)
-  
-elif option == 'Neural Prophet':
-  # modelling
-  m = NeuralProphet()
-  m.fit(input)
-  future = m.make_future_dataframe(input, periods=nb_jours)
-  forecast = m.predict(future)
 
-  # Plot 
-  fig = px.line(test, x="Date",y="Adj Close")
-  fig.data[0].name="Prix observé"
-  fig.data[0].line.color = "#3A49F9"
-  fig.update_traces(showlegend=True)
-  fig.add_scatter(x=forecast['ds'], y=forecast['yhat1'], mode='lines', name='Prix prévisionnel', line=dict(color="#F5241E"))
-  # fig.update_layout(title_text=f'Predicted {ticker} Stock Prices For Next Year', title_x=0.5)
-  title = f"Voici le cours prévisionnel de l"+"'"+f"actif {ticker} pour les {nb_jours} prochains jours"
-  
   st.markdown(f"<h3 style='text-align: center; color: grey;'>{title}</h3>",unsafe_allow_html=True)
   st.plotly_chart(fig)
+  
+# elif option == 'Neural Prophet':
+#   # modelling
+#   m = NeuralProphet()
+#   m.fit(input)
+#   future = m.make_future_dataframe(input, periods=nb_jours)
+#   forecast = m.predict(future)
+
+#   # Plot 
+#   fig = px.line(test, x="Date",y="Adj Close")
+#   fig.data[0].name="Prix observé"
+#   fig.data[0].line.color = "#3A49F9"
+#   fig.update_traces(showlegend=True)
+#   fig.add_scatter(x=forecast['ds'], y=forecast['yhat1'], mode='lines', name='Prix prévisionnel', line=dict(color="#F5241E"))
+#   # fig.update_layout(title_text=f'Predicted {ticker} Stock Prices For Next Year', title_x=0.5)
+#   title = f"Voici le cours prévisionnel de l"+"'"+f"actif {ticker} pour les {nb_jours} prochains jours"
+  
+#   st.markdown(f"<h3 style='text-align: center; color: grey;'>{title}</h3>",unsafe_allow_html=True)
+#   st.plotly_chart(fig)
   
 
