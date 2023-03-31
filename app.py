@@ -64,7 +64,7 @@ if option == 'Prophet':
   st.markdown(f"<h3 style='text-align: center; color: grey;'>{title}</h3>",unsafe_allow_html=True)
   st.plotly_chart(fig)
   
- elif option == 'SARIMAX':
+elif option == 'SARIMAX':
   # modelling
   model = sm.tsa.SARIMAX(input, order=(1,1,1), seasonal_order=(2,2,0,12))
   results = model.fit()
