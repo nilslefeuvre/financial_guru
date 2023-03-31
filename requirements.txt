@@ -3,9 +3,6 @@ numpy
 matplotlib 
 seaborn 
 yfinance 
-datetime 
-dateutil.relativedelta 
-prophet 
 prophet 
 plotly 
-streamlit 
+streamlit
