@@ -22,6 +22,9 @@ user_input = st.text_input("Entrer le symbole de l'actif désiré :",'MSFT')
 
 nb_jours = int(st.text_input("Entrer l'horizon de temps souhaité pour la prévision (en nombre de jours) :",365))
 
+option = st.selectbox(
+    'Sélectionner un modèle de prévision :',
+    ('ARMA', 'Prophet'))
 
 # Pour mettre une date à choisir
 # d = st.date_input("Date de début")
@@ -42,29 +45,43 @@ input = test[['Date','Adj Close']]
 input.columns = ['ds','y']
 input['ds'] = pd.to_datetime(input['ds']).dt.strftime("%Y-%m-%d")
 
-# modelling
-m = Prophet(daily_seasonality=True)
-m.fit(input)
-future = m.make_future_dataframe(periods=nb_jours)
-forecast = m.predict(future)
+if option = 'Prophet':
+  # modelling
+  m = Prophet(daily_seasonality=True)
+  m.fit(input)
+  future = m.make_future_dataframe(periods=nb_jours)
+  forecast = m.predict(future)
 
-# Plot 
-fig = px.line(test, x="Date",y="Adj Close")
-fig.data[0].name="Prix observé"
+  # Plot 
+  fig = px.line(test, x="Date",y="Adj Close")
+  fig.data[0].name="Prix observé"
 
-fig.data[0].line.color = "#3A49F9"
-fig.update_traces(showlegend=True)
+  fig.data[0].line.color = "#3A49F9"
+  fig.update_traces(showlegend=True)
 
-fig.add_scatter(x=forecast['ds'], y=forecast['yhat'], mode='lines', name='Prix prévisionnel', line=dict(color="#F5241E"))
+  fig.add_scatter(x=forecast['ds'], y=forecast['yhat'], mode='lines', name='Prix prévisionnel', line=dict(color="#F5241E"))
 
-# fig.update_layout(title_text=f'Predicted {ticker} Stock Prices For Next Year', title_x=0.5)
+  # fig.update_layout(title_text=f'Predicted {ticker} Stock Prices For Next Year', title_x=0.5)
 
-title = f"Voici le cours prévisionnel de l"+"'"+f"actif {ticker} pour les {nb_jours} prochains jours"
+  title = f"Voici le cours prévisionnel de l"+"'"+f"actif {ticker} pour les {nb_jours} prochains jours"
+  
+  st.markdown(f"<h3 style='text-align: center; color: grey;'>{title}</h3>",unsafe_allow_html=True)
+
+  st.plotly_chart(fig)
+  
+ elif option = 'SARIMAX':
+  model = sm.tsa.SARIMAX(input, order=(1,1,1), seasonal_order=(2,2,0,12))
+  results = model.fit()
+  forecast = results.predict(start=end_date, end=(pd.to_datetime(end_date) + relativedelta(days=nb_jours)).strftime("%Y-%m-%d"))
+  fig,(ax1,ax2) = plt.subplots(2,figsize=(18,10))
+  forecast.plot(label='Forecasts',ax=ax1,title='SARIMA Forecasting')
+  test.plot(label='Actual',ax=ax1)
+  ax1.set_ylabel('Stock Price')
+  ax1.legend()
+  ax2.legend()
+  plt.tight_layout(pad=2)
+  title = f"Voici le cours prévisionnel de l"+"'"+f"actif {ticker} pour les {nb_jours} prochains jours"
 
 
 
-st.markdown(f"<h3 style='text-align: center; color: grey;'>{title}</h3>",
-unsafe_allow_html=True)
-
-st.plotly_chart(fig)
 
