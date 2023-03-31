@@ -4,6 +4,7 @@ matplotlib
 seaborn 
 yfinance 
 prophet 
+neuralprophet
 plotly 
 streamlit
 statsmodels
