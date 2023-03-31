@@ -6,3 +6,4 @@ yfinance
 prophet 
 plotly 
 streamlit
+statsmodels
