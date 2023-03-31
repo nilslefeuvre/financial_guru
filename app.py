@@ -49,28 +49,17 @@ future = m.make_future_dataframe(periods=nb_jours)
 forecast = m.predict(future)
 
 # Plot 
-
-fig = px.line(test, x="Date",
-y="Adj Close")
-
+fig = px.line(test, x="Date",y="Adj Close")
 fig.data[0].name="Prix observé"
 
-fig.data[0].line.color = 
-"#3A49F9"
-
+fig.data[0].line.color = "#3A49F9"
 fig.update_traces(showlegend=True)
 
-fig.add_scatter(x=forecast['ds'],
-y=forecast['yhat'],
-mode='lines',
-name='Prix prévisionnel',
-line=dict(color="#F5241E"))
+fig.add_scatter(x=forecast['ds'], y=forecast['yhat'], mode='lines', name='Prix prévisionnel', line=dict(color="#F5241E"))
 
 # fig.update_layout(title_text=f'Predicted {ticker} Stock Prices For Next Year', title_x=0.5)
 
-title = f"Voici le cours prévisionnel de l"+"'"+f"actif
-{ticker} pour les
-{nb_jours} prochains jours"
+title = f"Voici le cours prévisionnel de l"+"'"+f"actif {ticker} pour les {nb_jours} prochains jours"
 
 
 
