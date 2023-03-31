@@ -6,6 +6,7 @@ import yfinance as yf
 from datetime import datetime 
 from dateutil.relativedelta import relativedelta
 from prophet import Prophet
+from neuralprophet import NeuralProphet
 from prophet.plot import plot_plotly, plot_components_plotly
 import plotly.express as px
 import plotly.graph_objects as go
