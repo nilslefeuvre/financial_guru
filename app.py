@@ -10,7 +10,7 @@ from prophet.plot import plot_plotly, plot_components_plotly
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
-import statsmodels as sm
+import statsmodels.api as sm
 
 st.header("Quel avenir pour le cours de mon action ?")
 st.write("Les prévisions sont réalisées à partir d"+"'"+"un modèle Prophet")
